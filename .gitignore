@@ -1,2 +1,6 @@
 .venv/
 .idea/
+__pycache__/
+
+config.ini
+experiments.py
