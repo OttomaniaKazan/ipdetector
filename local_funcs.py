@@ -2,7 +2,8 @@ import configparser
 import json
 import os
 
-from entities import UserIp
+from entities import UserIp, CityByIp
+
 
 def ask_tokens():
     """" Получение и сохранение токенов сайта в файл конфигурации """
@@ -84,10 +85,10 @@ def get_token_yadisk():
     else:
         return None
 
-def write_json_file(city_by_ip: UserIp):
+def write_json_file(ip: UserIp, city: CityByIp):
     """ Запись в json файл ip(ключ) и город(значение) пользователя"""
     json_data = {
-        city_by_ip.ip: city_by_ip.city
+        ip.return_ip(): city.get_city_by_ip()
     }
 
     with open('city_by_ip.json', 'w', encoding='utf-8') as f:

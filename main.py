@@ -1,15 +1,17 @@
-from entities import UserIp, YaDiskWorks
+from entities import UserIp, YaDiskWorks, CityByIp
 from local_funcs import get_token_ipinfo, write_json_file, ask_tokens, \
     delete_config, get_token_yadisk, delete_json_file
 
 def main():
     ask_tokens()  # Спрашиваем токены у пользователя
-    ipinfo_token = get_token_ipinfo() # Токен ipinfo для работы
+    ipinfo_token = get_token_ipinfo()  # Токен ipinfo для работы
     ya_disk_token = get_token_yadisk()  # Токен ya_disk для работы
 
-    city_response = UserIp(ipinfo_token)   # Создаем объект для получения города и ip
-    city_response.get_ip_info()     # Выводим на экран информацию о полученных данных
-    write_json_file(city_response)  # Записываем json файл
+    ip_response = UserIp()  # Создаем объект для получения ip
+    ip_response.show_ip()  # Выводим на экран данные об IP
+    city_response = CityByIp(ipinfo_token, ip_response.return_ip())  # Создаем объект для информации о городе
+    city_response.show_city()  # Выводим на экран инфо о городе
+    write_json_file(ip_response, city_response)  # Записываем json файл
     data_file = 'city_by_ip.json'
 
     my_disk = YaDiskWorks(ya_disk_token)  # Создание объекта для работы с Яндекс Диском
@@ -20,4 +22,5 @@ def main():
     delete_json_file(data_file)  # Удаление локального json файла
     delete_config()  # Удаление config.ini
 
-main()
+if __name__ == '__main__':
+    main()
